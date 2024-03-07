@@ -14,7 +14,7 @@ from werkzeug.security import check_password_hash
 def get_uploaded_images():
     rootdir = os.getcwd()
     uploads = []
-    for subdir, dirs, files in os.walk(rootdir + "/uploads"):
+    for subdir, dirs, files in os.walk(os.path.join(rootdir, app.config['UPLOAD_FOLDER'])):
         for file in files:
             uploads.append(file)
     return uploads
