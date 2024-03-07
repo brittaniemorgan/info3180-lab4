@@ -30,6 +30,7 @@ def home():
 
 
 @app.route('/about/')
+@login_required
 def about():
     """Render the website's about page."""
     return render_template('about.html', name="Mary Jane")
@@ -89,6 +90,7 @@ def files():
     return render_template('files.html', uploads=get_uploaded_images())
 
 @app.route(("/logout"))
+@login_required
 def logout():
     logout_user()
     flash('Logout successful!', 'success')
