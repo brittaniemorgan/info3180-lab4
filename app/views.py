@@ -47,7 +47,7 @@ def upload():
         filename = secure_filename(photo.filename)
         photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
         flash('File Uploaded', 'success')
-        return redirect(url_for('home')) # Update this to redirect the user to a route that displays all uploaded image files
+        return redirect(url_for('files')) # Update this to redirect the user to a route that displays all uploaded image files
 
     return render_template('upload.html', form=uploadForm)
 
@@ -75,13 +75,11 @@ def login():
             flash('Login successful!', 'success')
             return redirect(url_for("upload"))
         else:
-            flash('Invalid username or password', 'error')
-
-        # Remember to flash a message to the user
-        return redirect(url_for("home"))  # The user should be redirected to the upload form instead
+            flash('Invalid username or password', 'danger')
     return render_template("login.html", form=form)
 
 @app.route('/uploads/<filename>')
+@login_required
 def get_image(filename):
     return send_from_directory(os.path.join(os.getcwd(), app.config['UPLOAD_FOLDER']), filename)
 
